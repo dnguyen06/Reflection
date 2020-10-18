@@ -22,17 +22,18 @@ public class Inspector {
         	System.out.println(tabs + "SUPERCLASS -> Recursively Inspect");
         	System.out.println(tabs + "Superclass : " + c.getSuperclass().getName());
         	inspectClass(c.getSuperclass(), obj, recursive, ++depth);
+        	depth--;
     	}
     	System.out.println(tabs + "INTERFACES( " + className + " )");
     	Class[] interfaces = c.getInterfaces();
     	if(interfaces.length == 0) {
     		System.out.println(tabs + "Interfaces-> NONE");
     	} else {
-    		System.out.println(tabs + "Interfaces->" + interfaces.length);
     		for (int i = 0; i < interfaces.length; i++) {
     			System.out.println(tabs + " INTERFACE -> Recursively Inspect");
     			System.out.println(tabs + " " + interfaces[i].getName());
     			inspectClass(interfaces[i], obj, recursive, ++depth);
+    			depth--;
     		}
     	}
     	
