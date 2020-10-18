@@ -99,7 +99,8 @@ public class Inspector {
     				}
     			}
     			System.out.println(tabs + "  " + "Return type: " + methods[i].getReturnType());
-    			
+    			int modifier = methods[i].getModifiers();
+    			System.out.println(tabs +  "  " + "Modifiers: " + Modifier.toString(modifier));
     		}
     	}
     	
