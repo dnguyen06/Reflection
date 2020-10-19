@@ -1,4 +1,7 @@
 import java.lang.reflect.*;
+
+import com.sun.javafx.collections.SetAdapterChange;
+
 import java.lang.Class;
 import java.lang.Object;
 
@@ -101,6 +104,45 @@ public class Inspector {
     			System.out.println(tabs + "  " + "Return type: " + methods[i].getReturnType());
     			int modifier = methods[i].getModifiers();
     			System.out.println(tabs +  "  " + "Modifiers: " + Modifier.toString(modifier));
+    		}
+    	}
+    	
+    	System.out.println(tabs + "FIELDS( " + className + " )");
+    	Field[] fields = c.getDeclaredFields();
+    	if(fields.length == 0) {
+    		System.out.println(tabs + "Fields-> NONE");
+    	} else {
+    		System.out.println(tabs + "Fields->");
+    		for(int i = 0; i < fields.length; i++) {
+    			System.out.println(tabs + " FIELD");
+    			System.out.println(tabs + "  " + "Name: " + fields[i].getName());
+    			System.out.println(tabs + "  " + "Type: " + fields[i].getType());
+    			int modifier = fields[i].getModifiers();
+    			System.out.println(tabs + "  " + "Modifiers: " + Modifier.toString(modifier));
+    			fields[i].setAccessible(true);
+//    			try {
+//    				if(fields[i].get(obj).getClass().getName() == null) {
+//    					System.out.println(tabs + "  This is null");
+//    				} else {
+//    					System.out.println(tabs + "  " + "CLASS: " + fields[i].get(obj).getClass().getName());
+//    				}
+//    				
+//    				if(fields[i].getType().isPrimitive()) {
+//						System.out.println(tabs + "  " + "Value: " + fields[i].get(obj));				
+//    				} else if (fields[i].getClass().isArray()) {
+//    					System.out.println(tabs + "  " + "This is an array");
+//    					
+//    				} else if (!recursive) {
+//    					System.out.println(tabs + "  " + "Reference Value: " + fields[i].get(obj).getClass());
+//    				}
+//    			} catch (IllegalArgumentException e) {
+//    				e.printStackTrace();
+//    			} catch (IllegalAccessException e) {
+//    				e.printStackTrace();
+//    			}
+    			
+
+    			
     		}
     	}
     	
