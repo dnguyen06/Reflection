@@ -120,26 +120,35 @@ public class Inspector {
     			int modifier = fields[i].getModifiers();
     			System.out.println(tabs + "  " + "Modifiers: " + Modifier.toString(modifier));
     			fields[i].setAccessible(true);
-//    			try {
-//    				if(fields[i].get(obj).getClass().getName() == null) {
-//    					System.out.println(tabs + "  This is null");
-//    				} else {
-//    					System.out.println(tabs + "  " + "CLASS: " + fields[i].get(obj).getClass().getName());
-//    				}
-//    				
-//    				if(fields[i].getType().isPrimitive()) {
-//						System.out.println(tabs + "  " + "Value: " + fields[i].get(obj));				
-//    				} else if (fields[i].getClass().isArray()) {
-//    					System.out.println(tabs + "  " + "This is an array");
-//    					
-//    				} else if (!recursive) {
-//    					System.out.println(tabs + "  " + "Reference Value: " + fields[i].get(obj).getClass());
-//    				}
-//    			} catch (IllegalArgumentException e) {
-//    				e.printStackTrace();
-//    			} catch (IllegalAccessException e) {
-//    				e.printStackTrace();
-//    			}
+    			try {
+ 
+   				if(fields[i].getType().isPrimitive()) {
+						System.out.println(tabs + "  " + "Value: " + fields[i].get(obj));				
+    			} else if (fields[i].getClass().isArray()) {
+    					System.out.println(tabs + "  " + "This is an array");
+    					
+   				} else if (!recursive) {
+   						if(fields[i].get(obj) == null) {
+   							System.out.println(tabs + "  " + "Value (ref): null");
+   						}else {
+   							System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName() + "@" + fields[i].get(obj).hashCode());
+   						}
+    					
+    			} else if (recursive ) {
+    				if(fields[i].get(obj) == null) {
+							System.out.println(tabs + "  " + "Value (ref): null");
+						}else {
+							System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName() + "@" + fields[i].get(obj).hashCode());
+						}
+    				System.out.println(tabs + " -> Recursively inspect");
+    	
+    				//inspectClass(c, obj, recursive, depth);
+    			}
+    			} catch (IllegalArgumentException e) {
+    				e.printStackTrace();
+   			} catch (IllegalAccessException e) {
+    				e.printStackTrace();
+    			}
     			
 
     			
