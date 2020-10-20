@@ -31,7 +31,7 @@ public class Inspector {
 			for(int i = 0; i < Array.getLength(obj); i++) {
 				if(Array.get(obj,i) != null) {
 					System.out.println(tabs + "  " + "Value (ref): " + Array.get(obj, i) + "@" + Array.get(obj, i).hashCode());
-					if(!recursive) {
+					if(recursive) {
 						System.out.println(tabs + "  -> Recursively Inspect");
 						inspectClass(obj.getClass().getComponentType(), Array.get(obj, i), recursive, ++depth);
 						depth--;
@@ -169,14 +169,14 @@ public class Inspector {
 							}else {
 								System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName() + "@" + fields[i].get(obj).hashCode());
 								System.out.println(tabs + "   -> Recursively inspect");
-			    				inspectClass(fields[i].get(obj).getClass(), obj, recursive, ++depth);
+			    				inspectClass(fields[i].get(obj).getClass(),fields[i].get(obj), recursive, ++depth);
 			    				depth--;
 							}
 
 	    			}
 	    			} catch (IllegalArgumentException e) {
 	    				e.printStackTrace();
-	   			} catch (IllegalAccessException e) {
+	    			} catch (IllegalAccessException e) {
 	    				e.printStackTrace();
 	    			}
 	    			
