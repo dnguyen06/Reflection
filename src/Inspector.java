@@ -123,9 +123,16 @@ public class Inspector {
     			try {
  
    				if(fields[i].getType().isPrimitive()) {
-						System.out.println(tabs + "  " + "Value: " + fields[i].get(obj));				
-    			} else if (fields[i].getClass().isArray()) {
-    					System.out.println(tabs + "  " + "This is an array");
+						System.out.println(tabs + "  " + "Value: " + fields[i].get(obj));
+   				} else if (fields[i].get(obj) == null) {
+   						System.out.println(tabs + "  " + "Value (ref): null");
+    			} else if (fields[i].get(obj).getClass().isArray()) {
+    					System.out.println(tabs + "  " + "Component Type: " + fields[i].get(obj).getClass().getComponentType());
+    					System.out.println(tabs + "  " + "Length: " + Array.getLength(fields[i].get(obj)));
+    					System.out.println(tabs + "  " + "Entries->");
+    					for(int j = 0; j < Array.getLength(fields[i].get(obj)); j++) {
+    						System.out.println(tabs + "   " + "Value: " + Array.get(fields[i].get(obj), j));
+    					}
     					
    				} else if (!recursive) {
    						if(fields[i].get(obj) == null) {
@@ -134,15 +141,16 @@ public class Inspector {
    							System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName() + "@" + fields[i].get(obj).hashCode());
    						}
     					
-    			} else if (recursive ) {
+    			} else if (recursive) {
     				if(fields[i].get(obj) == null) {
 							System.out.println(tabs + "  " + "Value (ref): null");
 						}else {
 							System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName() + "@" + fields[i].get(obj).hashCode());
+							System.out.println(tabs + "   -> Recursively inspect");
+		    				//inspectClass(fields[i].get(obj).getClass(), obj, recursive, ++depth);
+		    				//depth--;
 						}
-    				System.out.println(tabs + " -> Recursively inspect");
-    	
-    				//inspectClass(c, obj, recursive, depth);
+
     			}
     			} catch (IllegalArgumentException e) {
     				e.printStackTrace();
