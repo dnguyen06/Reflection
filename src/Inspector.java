@@ -143,30 +143,31 @@ public class Inspector {
 					System.out.println(tabs + "  " + "Modifiers: " + Modifier.toString(modifier));
 					fields[i].setAccessible(true);
 					try {
-
+						
+						Object object = fields[i].get(obj);
 						if (fields[i].getType().isPrimitive()) {
-							System.out.println(tabs + "  " + "Value: " + fields[i].get(obj));
-						} else if (fields[i].get(obj) == null) {
+							System.out.println(tabs + "  " + "Value: " + object);
+						} else if (object == null) {
 							System.out.println(tabs + "  " + "Value (ref): null");
-						} else if (fields[i].get(obj).getClass().isArray()) {
+						} else if (object.getClass().isArray()) {
 							System.out.println(tabs + "  " + "Component Type: "
-									+ fields[i].get(obj).getClass().getComponentType());
-							System.out.println(tabs + "  " + "Length: " + Array.getLength(fields[i].get(obj)));
+									+ object.getClass().getComponentType());
+							System.out.println(tabs + "  " + "Length: " + Array.getLength(object));
 							System.out.println(tabs + "  " + "Entries->");
-							for (int j = 0; j < Array.getLength(fields[i].get(obj)); j++) {
-								System.out.println(tabs + "   " + "Value: " + Array.get(fields[i].get(obj), j));
+							for (int j = 0; j < Array.getLength(object); j++) {
+								System.out.println(tabs + "   " + "Value: " + Array.get(object, j));
 							}
 
 						} else if (!recursive) {
 
-							System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName()
-									+ "@" + fields[i].get(obj).hashCode());
+							System.out.println(tabs + "  " + "Value (ref): " + object.getClass().getName()
+									+ "@" + object.hashCode());
 
 						} else {
-							System.out.println(tabs + "  " + "Value (ref): " + fields[i].get(obj).getClass().getName()
-									+ "@" + fields[i].get(obj).hashCode());
+							System.out.println(tabs + "  " + "Value (ref): " + object.getClass().getName()
+									+ "@" + object.hashCode());
 							System.out.println(tabs + "   -> Recursively inspect");
-							inspectClass(fields[i].get(obj).getClass(), fields[i].get(obj), recursive, ++depth);
+							inspectClass(object.getClass(), object, recursive, ++depth);
 							depth--;
 
 						}
